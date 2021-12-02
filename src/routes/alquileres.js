@@ -6,4 +6,6 @@ const router  = Router();
 router.get('/', AlquilerControl.default.ConsultarDestacados);
 router.put('/', AlquilerControl.default.ObtenerAlquileres);
 
+router.get('/:id', AlquilerControl.default.ConsultarDetalleAlquiler);
+
  exports.default = router;
