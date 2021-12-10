@@ -4,6 +4,7 @@ const morgan = require('morgan');
 const path = require('path')
 
 const AlquilerRuta = require('./src/routes/alquileres');
+const MailRuta = require('./src/routes/mails');
 
 const app = express();
 app.use(morgan("dev"));
@@ -20,3 +21,4 @@ app.listen(app.get('port'), () => {
 });
 
 app.use('/api/rentals', AlquilerRuta.default);
+app.use('/api/send-email', MailRuta.default);

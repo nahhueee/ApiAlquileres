@@ -19,8 +19,6 @@ class AlquileresControl{
         var variable = ''
         var parametros = []
 
-        console.log(data)
-
         
         if(data.Localidad!=0 && data.Categoria==0 && data.Personas==''){
             variable = ' WHERE a.idZona = ? '
@@ -66,12 +64,44 @@ class AlquileresControl{
     };
 
     ConsultarDetalleAlquiler (req, res){
-        db.default.query(`SELECT a.*, FORMAT(IFNULL(SUM(c.raiting)/COUNT(c.raiting),0),2) Raiting, z.nombre zona from alquileres a 
+        db.default.query(`SELECT a.*, FORMAT(IFNULL(SUM(c.raiting)/COUNT(c.raiting),0),2) Raiting, COUNT(c.raiting) cantValoraciones, z.nombre zona, ca.categoria from alquileres a 
                         LEFT JOIN comentarios c on a.id = c.idAlquiler
                         INNER JOIN zonas z on z.id = a.idZona
+                        INNER JOIN categorias ca on ca.id = a.idCategoria
                         WHERE a.id = ?
                         GROUP BY a.id
                         ORDER BY RAND()`, [req.params.id],(error, stock) => {
+                        if (error) throw error;
+                        res.json(stock);
+            });
+    };
+    ConsultarServiciosAlquiler (req, res){
+        db.default.query(`SELECT s.icono, s.nombre servicio, sa.descripcion FROM serviciosAlquiler sa 
+                        INNER JOIN servicios s on s.id = sa.idServicio
+                        WHERE sa.idAlquiler = ?`, [req.params.id],(error, stock) => {
+                        if (error) throw error;
+                        res.json(stock);
+            });
+    };
+    ConsultarGaleriaAlquiler (req, res){
+        db.default.query(`SELECT imagen thumb FROM Galeria 
+                          WHERE idAlquiler = ?`, [req.params.id],(error, stock) => {
+                        if (error) throw error;
+                        res.json(stock);
+            });
+    };
+    ConsultarTarifaAlquiler (req, res){
+        db.default.query(`SELECT ta.descripcion, t.icono, t.tarifa, t.c FROM tarifasAlquiler ta
+                          INNER JOIN tarifas t on t.id = ta.idTarifa 
+                          WHERE ta.idAlquiler = ?`, [req.params.id],(error, stock) => {
+                        if (error) throw error;
+                        res.json(stock);
+            });
+    };
+    ConsultarReseñasAlquiler (req, res){
+        db.default.query(`SELECT titulo, descripcion, raiting, DATE_FORMAT(fecha, "%d-%m-%Y") fecha FROM comentarios
+                          WHERE idAlquiler = ?
+                          ORDER BY id DESC`, [req.params.id],(error, stock) => {
                         if (error) throw error;
                         res.json(stock);
             });
