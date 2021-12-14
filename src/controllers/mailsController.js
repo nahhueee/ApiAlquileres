@@ -12,17 +12,8 @@ class Mails{
             data.salida = moment(data.salida).format('DD/MM/YYYY'); 
 
             var contentHTML = `
-            <header style="
-                background-image: url('https://res.cloudinary.com/creation-code/image/upload/v1638971019/fondo_tl9e8a.jpg'); 
-                height: 20vh; 
-                background-size: cover;
-                -webkit-background-size: cover;
-                -moz-background-size: cover;
-                -o-background-size: cover;
-                background-size: cover;
-                text-align: center;
-                ">
-                <img src="https://res.cloudinary.com/creation-code/image/upload/v1638971317/Titulo_s8jmku.png" alt="" style="line-height: 200px; margin: 0 auto;" width="300px" height="150px">
+            <header style="text-align: center; height: 18vh; background-color: rgb(36, 36, 36);">
+            <img src="https://res.cloudinary.com/creation-code/image/upload/v1639262935/logito_lqpoqs.png" alt="" style="line-height: 200px; margin: 0 auto;" height="130px" width="230px">
             </header>
             <div style="margin-top: 30px; text-align: center; font-family: Arial, Helvetica, sans-serif;">
                 <br>
@@ -63,8 +54,8 @@ class Mails{
                 port: 465,
                 secure: true, // true for 465, false for other ports
                 auth: {
-                  user: 'nahu852na@gmail.com', // generated ethereal user
-                  pass: 'ntwesbozqgdjaylq', // generated ethereal password
+                  user: 'valleserranotraslasierra@gmail.com', // generated ethereal user
+                  pass: 'ygznjtkuyxwmlbtv', // generated ethereal password
                 },
                 tls: {
                     rejectUnauthorized: false
@@ -72,7 +63,9 @@ class Mails{
             })
     
             const info = await transporter.sendMail({
-                from: 'ValleSerrano.com',
+                from: data.email,
+                replyTo: data.email,
+                // from: 'ValleSerrano.com',
                 to: data.hospedante,
                 subject: 'Consulta por tu Alojamiento /' + data.alojamiento,
                 html: contentHTML
@@ -89,6 +82,67 @@ class Mails{
             res.json({ message : error});
         }
      };
+
+    async EnviarDatos (req, res){
+        try {
+            const data = req.body;
+            console.log(data)
+
+            var Servicios = JSON.stringify(data.servicios, null, 4)
+
+            var contentHTML = `
+            <p> Nombre: ${data.name}</p>
+            <p> Localidad: ${data.localidad}</p>
+            <p> Direccion: ${data.direccion}</p>
+            <p> Categoria: ${data.categoria}</p>
+            <p> Capacidad: ${data.capacidad}</p>
+            <p> Habitaciones: ${data.Habitaciones}</p>
+            <p> Descripcion: ${data.descripcion}</p>
+            <hr>
+            <p> Precio: ${data.precio}</p>
+            <p> Condicion: ${data.condicion}</p>
+            <hr>
+            <p> Telefono1: ${data.telefono1}</p>
+            <p> Telefono2: ${data.telefono2}</p>
+            <p> Wpp: ${data.wpp}</p>
+            <p> Web: ${data.web}</p>
+            <p> Mail: ${data.mail}</p>
+            <hr>
+            Servicios- <br>
+            <p> Mail: ${Servicios}</p>
+            `
+           
+            const transporter = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 465,
+                secure: true, // true for 465, false for other ports
+                auth: {
+                  user: 'valleserranotraslasierra@gmail.com', // generated ethereal user
+                  pass: 'ygznjtkuyxwmlbtv', // generated ethereal password
+                },
+                tls: {
+                    rejectUnauthorized: false
+                },
+            })
+    
+            const info = await transporter.sendMail({
+                from: 'valleserranotraslasierra@gmail.com',
+                to: "nahu852na@gmail.com",
+                subject: 'Datos de nuevo alojamiento a publicar',
+                html: contentHTML
+            })
+    
+            if(info.messageId!=''){
+                res.json('Recibido');
+            }else{
+                res.json('Error');
+            }
+
+        } catch (error) {
+            console.log(error)
+            res.json({ message : error});
+        }
+    };
 }
 
 
