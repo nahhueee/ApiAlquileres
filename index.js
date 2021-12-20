@@ -1,7 +1,7 @@
 const cors = require('cors');
 const express = require('express');
 const res = require('express/lib/response');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const path = require('path')
 
 const AlquilerRuta = require('./src/routes/alquileres');
@@ -9,7 +9,7 @@ const MailRuta = require('./src/routes/mails');
 const ZonaRuta = require('./src/routes/zonas');
 
 const app = express();
-app.use(morgan("dev"));
+// app.use(morgan("dev"));
 
 //setings
 app.set('port', process.env.Port || 3000);
