@@ -12,15 +12,13 @@ const app = express();
 // app.use(morgan("dev"));
 
 //setings
-app.set('port', process.env.Port || 3000);
+// app.set('port', process.env.Port || 3000);
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
 //Starting the server
-app.listen(app.get('port'), () => {
-    console.log('server on port ' + app.get('port'));
-});
+app.listen(process.env.PORT || 5000)
 
 app.use('/api/',(req, res) => {
     res.statusCode = 200;
