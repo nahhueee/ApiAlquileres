@@ -96,7 +96,7 @@ class Mails{
             <p> Direccion: ${data.direccion}</p>
             <p> Categoria: ${data.categoria}</p>
             <p> Capacidad: ${data.capacidad}</p>
-            <p> Habitaciones: ${data.Habitaciones}</p>
+            <p> Habitaciones: ${data.habitaciones}</p>
             <p> Descripcion: ${data.descripcion}</p>
             <hr>
             <p> Precio: ${data.precio}</p>
