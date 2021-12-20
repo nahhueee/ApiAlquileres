@@ -1,5 +1,6 @@
 const cors = require('cors');
 const express = require('express');
+const res = require('express/lib/response');
 const morgan = require('morgan');
 const path = require('path')
 
@@ -20,6 +21,13 @@ app.use(express.urlencoded({extended: false}));
 app.listen(app.get('port'), () => {
     console.log('server on port ' + app.get('port'));
 });
+
+app.use('/api/',(req, res) => {
+    res.statusCode = 200;
+    res.setHeader('Content-Type', 'text/plain');
+    res.end('Hola Mundo');
+});
+
 
 app.use('/api/rentals', AlquilerRuta.default);
 app.use('/api/zones', ZonaRuta.default);
