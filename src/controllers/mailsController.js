@@ -86,8 +86,7 @@ class Mails{
     async EnviarDatos (req, res){
         try {
             const data = req.body;
-            console.log(data)
-
+          
             var Servicios = JSON.stringify(data.servicios, null, 4)
 
             var contentHTML = `
