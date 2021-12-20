@@ -4,5 +4,6 @@ const router  = Router();
 
 router.get('/', ZonaControl.default.ConsultarZonas);
 router.get('/det/:id', ZonaControl.default.ConsultarDetalleZona);
+router.get('/rentals/:id', ZonaControl.default.ConsultarAlojamientos);
 
  exports.default = router;
