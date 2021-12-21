@@ -5,16 +5,15 @@
   "main": "index.js",
   "dependencies": {
     "cors": "^2.8.5",
-    "express": "^4.17.1",
+    "express": "^4.17.2",
     "moment": "^2.29.1",
     "mysql": "^2.18.1",
     "nodemailer": "^6.7.2",
-    "promise-mysql": "^3.3.1"
-  },
-  "devDependencies": {
+    "promise-mysql": "^3.3.2",
     "morgan": "^1.10.0",
     "nodemon": "^2.0.15"
   },
+  "devDependencies": {},
   "scripts": {
     "start": "node index.js"
   },
