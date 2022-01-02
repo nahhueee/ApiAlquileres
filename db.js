@@ -19,7 +19,7 @@ var pool  = mysql.createPool({
     host: '127.0.0.1',
     user: 'nahhueee',
     password: "43797231",
-    database: 'dbvalleserrano',
+    database: 'valleserrano',
     multipleStatements: true
 });
 module.exports.pool = pool;

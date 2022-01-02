@@ -88,6 +88,7 @@ class Mails{
             const data = req.body;
           
             var Servicios = JSON.stringify(data.servicios, null, 4)
+            var Pagos = JSON.stringify(data.pagos, null, 4)
 
             var contentHTML = `
             <p> Nombre: ${data.name}</p>
@@ -107,8 +108,16 @@ class Mails{
             <p> Web: ${data.web}</p>
             <p> Mail: ${data.mail}</p>
             <hr>
+            <p> Reservas: ${data.reservas}</p>
+            <p> Entrada: ${data.entrada}</p>
+            <p> Salida: ${data.salida}</p>
+            <p> Visitas: ${data.visitas}</p>
+            <hr>
+            Pagos- <br>
+            <p> ${Pagos}</p>
+            <hr>
             Servicios- <br>
-            <p> Mail: ${Servicios}</p>
+            <p> ${Servicios}</p>
             `
            
             const transporter = nodemailer.createTransport({
