@@ -4,7 +4,9 @@ const router  = Router();
 
 //router.get('/', cajasControl.Consultar);
 router.get('/', AlquilerControl.default.ConsultarDestacados);
+router.get('/all', AlquilerControl.default.ObtenerTodos);
 router.put('/', AlquilerControl.default.ObtenerAlquileres);
+router.put('/clicks', AlquilerControl.default.ObtenerClicks);
 
 router.get('/:id', AlquilerControl.default.ConsultarDetalleAlquiler);
 router.get('/services/:id', AlquilerControl.default.ConsultarServiciosAlquiler);

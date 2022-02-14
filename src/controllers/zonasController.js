@@ -56,6 +56,23 @@ class ZonasControl{
         });
      });
     };
+
+    ConsultarGaleria (req, res){
+      pool.getConnection(function(err, connection) {
+        // Use the connection
+        connection.query(`SELECT ruta FROM galeriazona
+                          WHERE idZona = ?
+                          ORDER BY RAND()
+                          `,[req.params.id], function (error, fields) {
+          
+          connection.release();
+      
+          // Handle error after the release.
+          if (error) throw error;
+          res.json(fields);
+        });
+     });
+    };
 }
 
 

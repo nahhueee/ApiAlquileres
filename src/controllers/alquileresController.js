@@ -23,6 +23,37 @@ class AlquileresControl{
             });
         });
     }
+    
+     ObtenerTodos (req, res){
+        pool.getConnection(function(err, connection) {
+            // Use the connection
+            connection.query(`SELECT id code, nombre name FROM alquileres`, function (error, fields) {
+              
+              connection.release();
+          
+              // Handle error after the release.
+              if (error) throw error;
+              res.json(fields);
+            });
+        });
+    }
+    
+    ObtenerClicks (req, res){
+        const data = req.body;
+        pool.getConnection(function(err, connection) {
+            // Use the connection
+            connection.query(`SELECT count(id) clicks FROM clicks
+            WHERE idAlquiler = ? and MONTH(fecha) = ?
+            GROUP BY MONTH(fecha)`,[data.idAlquiler,data.mes], function (error, fields) {
+              
+              connection.release();
+          
+              // Handle error after the release.
+              if (error) throw error;
+              res.json(fields);
+            });
+        });
+    }
 
     ObtenerAlquileres (req, res){
         const data = req.body;
@@ -138,7 +169,7 @@ class AlquileresControl{
 
         pool.getConnection(function(err, connection) {
             // Use the connection
-            connection.query(`SELECT id, imgPrincipal, nombre, precioCond, precioGral from alquileres  
+            connection.query(`SELECT id, imgPrincipal, nombre, precioCond, precioGral, verificado from alquileres  
                               WHERE idZona = ? and idCategoria = ? and id != ?
                               ORDER BY RAND()`,
                               [data.idZona, data.idCategoria, data.idAlquiler], function (error, fields) {
@@ -163,7 +194,9 @@ class AlquileresControl{
                               WHERE a.id = ?
                               GROUP BY a.id
                               ORDER BY RAND()`, [req.params.id], function (error, fields) {
-              
+                                  
+                              connection.query(`INSERT INTO clicks(fecha,idAlquiler) VALUES (CURDATE(),?)`, [req.params.id], function (error, fields) {})
+                              
               connection.release();
           
               // Handle error after the release.
@@ -172,6 +205,7 @@ class AlquileresControl{
             });
         });
     };
+   
     ConsultarServiciosAlquiler (req, res){
         pool.getConnection(function(err, connection) {
             // Use the connection

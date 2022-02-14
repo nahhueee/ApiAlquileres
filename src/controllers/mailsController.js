@@ -86,7 +86,9 @@ class Mails{
     async EnviarDatos (req, res){
         try {
             const data = req.body;
-          
+           
+            var contacto = JSON.stringify(data.contacto, null, 4)
+            var condiciones = JSON.stringify(data.condiciones, null, 4)
             var Servicios = JSON.stringify(data.servicios, null, 4)
             var Pagos = JSON.stringify(data.pagos, null, 4)
 
@@ -102,16 +104,11 @@ class Mails{
             <p> Precio: ${data.precio}</p>
             <p> Condicion: ${data.condicion}</p>
             <hr>
-            <p> Telefono1: ${data.telefono1}</p>
-            <p> Telefono2: ${data.telefono2}</p>
-            <p> Wpp: ${data.wpp}</p>
-            <p> Web: ${data.web}</p>
-            <p> Mail: ${data.mail}</p>
+            Contacto- <br>
+            <p> ${contacto}</p>
             <hr>
-            <p> Reservas: ${data.reservas}</p>
-            <p> Entrada: ${data.entrada}</p>
-            <p> Salida: ${data.salida}</p>
-            <p> Visitas: ${data.visitas}</p>
+            Condiciones- <br>
+            <p> ${condiciones}</p>
             <hr>
             Pagos- <br>
             <p> ${Pagos}</p>
@@ -119,8 +116,7 @@ class Mails{
             Servicios- <br>
             <p> ${Servicios}</p>
             `
-           
-            const transporter = nodemailer.createTransport({
+           const transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 port: 465,
                 secure: true, // true for 465, false for other ports
