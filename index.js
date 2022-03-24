@@ -7,6 +7,7 @@ const path = require('path')
 const AlquilerRuta = require('./src/routes/alquileres');
 const MailRuta = require('./src/routes/mails');
 const ZonaRuta = require('./src/routes/zonas');
+const ComidaRuta = require('./src/routes/comida');
 
 const app = express();
 app.use(morgan("dev"));
@@ -28,6 +29,7 @@ app.listen(app.get('port'), () => {
 
 app.use('/api/rentals', AlquilerRuta.default);
 app.use('/api/zones', ZonaRuta.default);
+app.use('/api/food', ComidaRuta.default);
 app.use('/api/send-email', MailRuta.default);
 app.use('/',(req, res) => {
     res.statusCode = 200;
