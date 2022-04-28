@@ -26,7 +26,7 @@ app.listen(app.get('port'), () => {
 });
 
 
-
+//Routes
 app.use('/api/rentals', AlquilerRuta.default);
 app.use('/api/zones', ZonaRuta.default);
 app.use('/api/food', ComidaRuta.default);
@@ -34,6 +34,6 @@ app.use('/api/send-email', MailRuta.default);
 app.use('/',(req, res) => {
     res.statusCode = 200;
     res.setHeader('Content-Type', 'text/plain');
-    res.end('Hola Mundo');
+    res.end('Bienvenida');
 });
 

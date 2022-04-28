@@ -27,12 +27,12 @@ class AlquileresControl{
      ObtenerTodos (req, res){
         pool.getConnection(function(err, connection) {
             // Use the connection
-            connection.query(`SELECT id code, nombre name FROM alquileres`, function (error, fields) {
+            connection.query(`SELECT id code, nombre name FROM alquileres`, function (err, fields) {
               
               connection.release();
           
               // Handle error after the release.
-              if (error) throw error;
+              if (err) throw err;
               res.json(fields);
             });
         });
@@ -137,18 +137,7 @@ class AlquileresControl{
                 GROUP BY sa.idAlquiler ) Resultados
                 WHERE Resultados.nrequisitos = ` +cant+ ``;
 
-                // SELECT * FROM (
-                // SELECT Count(sa.IdAlquiler) nrequisitos, Alojamientos.* FROM serviciosalquiler sa
-                // INNER JOIN (
-                // SELECT a.*, FORMAT(IFNULL(SUM(c.raiting)/COUNT(c.raiting),0),2) Raiting, z.nombre zona from alquileres a
-                // INNER JOIN zonas z on z.id = a.idZona
-                // LEFT JOIN comentarios c on a.id = c.idAlquiler
-                // GROUP BY a.id) Alojamientos on Alojamientos.id = sa.IdAlquiler
-                // WHERE sa.IdServicio = 3
-                // GROUP BY sa.IdAlquiler ) Resultados
-                // WHERE Resultados.nrequisitos = 1
-
-            
+              
                 pool.getConnection(function(err, connection) {
                     // Use the connection
                     connection.query(query, parametros, function (error, fields) {
